@@ -1,6 +1,6 @@
 # ASSETS FROM:
-# https://evil-poisonbr.itch.io/ -- obstacle
-# https://wallpapersafari.com/w/qiCQUB -- background
+# https://evil-poisonbr.itch.io/ -- obstacle_old
+# https://wallpapersafari.com/w/qiCQUB -- background_old
 # https://tavino.itch.io/spaceship -- spaceship
 # Sound from Zapsplat.com -- game theme
 # https://gooseninja.itch.io/space-music-pack -- menu theme
@@ -64,6 +64,9 @@ rules_image = pygame.image.load(os.path.join('Assets', 'rules.png'))
 credits_image = pygame.image.load(os.path.join('Assets', 'credits.png'))
 about_image = pygame.image.load(os.path.join('Assets', 'about.png'))
 
+title = pygame.image.load(os.path.join('Assets', 'title.png'))
+button = pygame.image.load(os.path.join('Assets', 'button.png'))
+
 #obstacle
 obstacle = pygame.image.load(os.path.join('Assets', 'obstacle.png'))
 
@@ -77,6 +80,7 @@ RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 BACK = (13, 13, 72)
+ORANGE = (245, 156, 43)
 
 #power-ups
 POWER = pygame.transform.scale(pygame.image.load(os.path.join('Assets', 'powerUp.png')), (30, 30))
@@ -259,9 +263,9 @@ def game_over(point):
     Game_Over = OVER_FONT.render("GAME OVER", 1, RED)
     WIN.blit(Game_Over, ((300-Game_Over.get_width())//2, (500-Game_Over.get_height())//2))
     pygame.display.update()
-    f= open("scores.txt","a")
-    f.write('\n' + str(point))
-    f.close()
+    #f= open("scores.txt","a")
+    #f.write('\n' + str(point))
+    #f.close()
 
 def clear():
     global objects
@@ -292,8 +296,9 @@ def Menu():
         if not pygame.mixer.Channel(1).get_busy():
             pygame.mixer.Channel(1).play(MENU_SOUND)
 
-        WIN.fill(BLACK)
-
+        #WIN.fill(BLACK)
+        WIN.blit(background_image, (0, 0))
+        WIN.blit(title, (10, 20))
         mx, my = pygame.mouse.get_pos()
         button_1 = pygame.Rect(50, 100, 200, 50)
         button_2 = pygame.Rect(50, 170, 200, 50)
@@ -305,7 +310,7 @@ def Menu():
             if not played:
                 played = True
                 pygame.mixer.Channel(2).play(MOUSE_OVER)
-            PLAY = DEF_FONT.render("PLAY", 1, GREEN)
+            PLAY = DEF_FONT.render("PLAY", 1, ORANGE)
             if click:
                 pygame.mixer.Channel(2).play(MOUSE_CLICK)
                 Game()
@@ -313,7 +318,7 @@ def Menu():
             if not played:
                 played = True
                 pygame.mixer.Channel(2).play(MOUSE_OVER)
-            RULES = DEF_FONT.render("RULES", 1, GREEN)
+            RULES = DEF_FONT.render("RULES", 1, ORANGE)
             if click:
                 pygame.mixer.Channel(2).play(MOUSE_CLICK)
                 rules.display()
@@ -321,7 +326,7 @@ def Menu():
             if not played:
                 played = True
                 pygame.mixer.Channel(2).play(MOUSE_OVER)
-            CREDITS = DEF_FONT.render("CREDITS", 1, GREEN)
+            CREDITS = DEF_FONT.render("CREDITS", 1, ORANGE)
             if click:
                 pygame.mixer.Channel(2).play(MOUSE_CLICK)
                 creditss.display()
@@ -329,7 +334,7 @@ def Menu():
             if not played:
                 played = True
                 pygame.mixer.Channel(2).play(MOUSE_OVER)
-            ABOUT = DEF_FONT.render("ABOUT", 1, GREEN)
+            ABOUT = DEF_FONT.render("ABOUT", 1, ORANGE)
             if click:
                 pygame.mixer.Channel(2).play(MOUSE_CLICK)
                 about.display()
@@ -337,7 +342,7 @@ def Menu():
             if not played:
                 played = True
                 pygame.mixer.Channel(2).play(MOUSE_OVER)
-            QUIT = DEF_FONT.render("QUIT", 1, GREEN)
+            QUIT = DEF_FONT.render("QUIT", 1, ORANGE)
             if click:
                 pygame.mixer.Channel(2).play(MOUSE_CLICK)
                 running = False
@@ -351,11 +356,16 @@ def Menu():
             ABOUT = DEF_FONT.render("ABOUT", 1, BLACK)
             QUIT = DEF_FONT.render("QUIT", 1, BLACK)
         
-        pygame.draw.rect(WIN, RED, button_1, 0, 15)
-        pygame.draw.rect(WIN, RED, button_2, 0, 15)
-        pygame.draw.rect(WIN, RED, button_3, 0, 15)
-        pygame.draw.rect(WIN, RED, button_4, 0, 15)
-        pygame.draw.rect(WIN, RED, button_5, 0, 15)
+        WIN.blit(button, (50, 100))
+        WIN.blit(button, (50, 170))
+        WIN.blit(button, (50, 240))
+        WIN.blit(button, (50, 310))
+        WIN.blit(button, (50, 380))
+        #pygame.draw.rect(WIN, RED, button_1, 0, 15)
+        #pygame.draw.rect(WIN, RED, button_2, 0, 15)
+        #pygame.draw.rect(WIN, RED, button_3, 0, 15)
+        #pygame.draw.rect(WIN, RED, button_4, 0, 15)
+        #pygame.draw.rect(WIN, RED, button_5, 0, 15)
 
         
         WIN.blit(PLAY, (50+(200-PLAY.get_width())//2, 100+(50-PLAY.get_height())//2))
@@ -402,8 +412,8 @@ def Retry():
         if not pygame.mixer.Channel(1).get_busy():
             pygame.mixer.Channel(1).play(MENU_SOUND)
 
-        WIN.fill(BLACK)
-
+        #WIN.fill(BLACK)
+        WIN.blit(background_image, (0, 0))
         mx, my = pygame.mouse.get_pos()
         button_1 = pygame.Rect(50, 100, 200, 50)
         button_2 = pygame.Rect(50, 200, 200, 50)
@@ -413,7 +423,7 @@ def Retry():
             if not played:
                 played = True
                 pygame.mixer.Channel(2).play(MOUSE_OVER)
-            RETRY = DEF_FONT.render("RETRY", 1, GREEN)
+            RETRY = DEF_FONT.render("RETRY", 1, ORANGE)
             if click:
                 pygame.mixer.Channel(2).play(MOUSE_CLICK)
                 Game()
@@ -421,7 +431,7 @@ def Retry():
             if not played:
                 played = True
                 pygame.mixer.Channel(2).play(MOUSE_OVER)
-            RULES = DEF_FONT.render("RULES", 1, GREEN)
+            RULES = DEF_FONT.render("RULES", 1, ORANGE)
             if click:
                 pygame.mixer.Channel(2).play(MOUSE_CLICK)
                 rules.display()
@@ -429,7 +439,7 @@ def Retry():
             if not played:
                 played = True
                 pygame.mixer.Channel(2).play(MOUSE_OVER)
-            QUIT = DEF_FONT.render("QUIT", 1, GREEN)
+            QUIT = DEF_FONT.render("QUIT", 1, ORANGE)
             if click:
                 pygame.mixer.Channel(2).play(MOUSE_CLICK)
                 running = False
@@ -441,10 +451,13 @@ def Retry():
             RULES = DEF_FONT.render("RULES", 1, BLACK)
             QUIT = DEF_FONT.render("QUIT", 1, BLACK)
                 
+        WIN.blit(button, (50, 100))
+        WIN.blit(button, (50, 200))
+        WIN.blit(button, (50, 300))
 
-        pygame.draw.rect(WIN, RED, button_1, 0, 15)
-        pygame.draw.rect(WIN, RED, button_2, 0, 15)
-        pygame.draw.rect(WIN, RED, button_3, 0, 15)
+        #pygame.draw.rect(WIN, RED, button_1, 0, 15)
+        #pygame.draw.rect(WIN, RED, button_2, 0, 15)
+        #pygame.draw.rect(WIN, RED, button_3, 0, 15)
 
         WIN.blit(RETRY, (50+(200-RETRY.get_width())//2, 100+(50-RETRY.get_height())//2))
         WIN.blit(RULES, (50+(200-RULES.get_width())//2, 200+(50-RULES.get_height())//2))
@@ -484,8 +497,8 @@ class menuButton:
             if not pygame.mixer.Channel(1).get_busy():
                 pygame.mixer.Channel(1).play(MENU_SOUND)
 
-            WIN.fill(BLACK)
-
+            #WIN.fill(BLACK)
+            WIN.blit(background_image, (0, 0))
             mx, my = pygame.mouse.get_pos()
             button_1 = pygame.Rect(50, 50, 200, 50)
 
@@ -493,7 +506,7 @@ class menuButton:
                 if not played:
                     played = True
                     pygame.mixer.Channel(2).play(MOUSE_OVER)
-                MENU = DEF_FONT.render("MENU", 1, GREEN)
+                MENU = DEF_FONT.render("MENU", 1, ORANGE)
                 if click:
                     pygame.mixer.Channel(2).play(MOUSE_CLICK)
                     Menu()
@@ -501,7 +514,8 @@ class menuButton:
                 played = False
                 MENU = DEF_FONT.render("MENU", 1, BLACK)
 
-            pygame.draw.rect(WIN, RED, button_1, 0, 15)
+            WIN.blit(button, (50, 50))
+            #pygame.draw.rect(WIN, RED, button_1, 0, 15)
             WIN.blit(self.image, (50, 150))
 
             WIN.blit(MENU, (50+(200-MENU.get_width())//2, 50+(50-MENU.get_height())//2))
